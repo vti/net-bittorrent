@@ -370,7 +370,7 @@ package Net::BitTorrent::Torrent;
                                _unset_piece => 'Bit_Off',
                                has_piece    => 'bit_test',
                                seed         => 'is_full'
-                   },
+                   }
     );
     sub _build_have { '0' x $_[0]->piece_count }
     after '_set_piece' => sub {
