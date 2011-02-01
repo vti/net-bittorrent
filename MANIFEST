@@ -8,8 +8,6 @@ lib/Net/BitTorrent.pm
 lib/Net/BitTorrent/Callbacks.pod
 lib/Net/BitTorrent/DHT.pm
 lib/Net/BitTorrent/DHT/Standalone.pm
-lib/Net/BitTorrent/Network/IPFilter.pm
-lib/Net/BitTorrent/Network/IPFilter/Rule.pm
 lib/Net/BitTorrent/Network/TCP.pm
 lib/Net/BitTorrent/Network/UDP.pm
 lib/Net/BitTorrent/Network/Utility.pm
@@ -61,9 +59,6 @@ README
 t/10000_by_class/Net/BitTorrent.t
 t/10000_by_class/Net/BitTorrent/DHT.t
 t/10000_by_class/Net/BitTorrent/DHT/Standalone.t
-t/10000_by_class/Net/BitTorrent/Network/IPFilter.t
-t/10000_by_class/Net/BitTorrent/Network/IPFilter/Rule.t
-t/10000_by_class/Net/BitTorrent/Network/IPFilter_path.t
 t/10000_by_class/Net/BitTorrent/Protocol/BEP03/Peer/Incoming.t
 t/10000_by_class/Net/BitTorrent/Protocol/BEP03/Peer/Outgoing.t
 t/10000_by_class/Net/BitTorrent/Storage/File.t

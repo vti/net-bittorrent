@@ -213,7 +213,7 @@ package t::10000_by_class::Net::BitTorrent;
 
     sub validate_ip_filter : Test( 1 ) {
         my $s = shift;
-        isa_ok $s->{'nb'}->ip_filter, 'Net::BitTorrent::Network::IPFilter',
+        isa_ok $s->{'nb'}->ip_filter, 'Config::IPFilter',
             '...->ip_filter( )';
     }
 
