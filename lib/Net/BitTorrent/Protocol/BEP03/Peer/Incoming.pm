@@ -96,6 +96,7 @@
                            $info_hash->to_Hex)
             if !$t;
         $s->_set_torrent($t);
+
         #$s->_check_unique_connection;
         return if !defined $s;
 

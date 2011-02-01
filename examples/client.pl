@@ -5,7 +5,6 @@ use autodie;
 # Track every object including where they're created
 #use Devel::Leak::Object qw{ GLOBAL_bless };
 #$Devel::Leak::Object::TRACKSOURCELINES = 1;
-
 #
 use AnyEvent::Impl::Perl;
 use Data::Dump;
@@ -33,19 +32,21 @@ $cli = Net::BitTorrent->new(
     },
     on_peer_disconnect => sub {
         my ($s, $a) = @_;
- #
-       warn 'Disconnect: ' . $a->{'message'};
+
+        #
+        warn 'Disconnect: ' . $a->{'message'};
     },
     on_peer_packet_in => sub {
         my ($s, $a) = @_;
+
         # warn $a->{'message'};    # ddx $a->{'packet'};
     },
     on_peer_packet_out => sub { ...; },
     on_piece_hash_pass => sub {
         my ($s, $i) = @_;
         warn sprintf '+ We now have piece %-3d', $i;
-        #exit if $s->torrent(0)->seed;
 
+        #exit if $s->torrent(0)->seed;
         $cli->send if $s->torrent(0)->seed;
     },
     on_piece_hash_fail => sub {

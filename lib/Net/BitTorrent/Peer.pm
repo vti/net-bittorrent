@@ -134,7 +134,8 @@ package Net::BitTorrent::Peer;
     around '_delete_request' => sub {
         my ($c, $s, $i, $o, $l) = @_;
         return $c->($s, $i) if !ref $i && !defined $o;
-        my (undef, $x) = $s->_find_request(
+        my (undef, $x)
+            = $s->_find_request(
              blessed $i ? ($i->index, $i->offset, $i->length) : ($i, $o, $l));
         return $c->($s, $x);
     };

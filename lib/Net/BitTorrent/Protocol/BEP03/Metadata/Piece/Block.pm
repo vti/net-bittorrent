@@ -60,7 +60,8 @@
         require Scalar::Util;
         Scalar::Util::weaken $s;
         AE::timer(
-            5*60, 0,
+            5 * 60,
+            0,
             sub {
                 $s // return;
                 $s->complete && return;

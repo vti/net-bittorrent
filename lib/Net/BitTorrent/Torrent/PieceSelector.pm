@@ -26,8 +26,9 @@
           }
     );
     sub _build__working_pieces { {} }
+
     sub _unassigned_working_pieces {
-        grep { $_->_first_unassigned_block?1:0 } shift->working_pieces;
+        grep { $_->_first_unassigned_block ? 1 : 0 } shift->working_pieces;
     }
     has 'strategy' => (isa     => 'RoleName',
                        is      => 'ro',

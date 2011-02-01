@@ -144,8 +144,8 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
             $s->disconnect(sprintf 'Bad piece index in request: %d > %d',
                            $i, $s->torrent->piece_count)
             if $i > $s->torrent->piece_count;
-        my $_l =
-            ($i == $s->torrent->piece_count - 1)
+        my $_l
+            = ($i == $s->torrent->piece_count - 1)
             ? $s->torrent->size % $s->torrent->piece_length
             : $s->torrent->piece_length;
         return
@@ -189,14 +189,13 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
         my ($i, $o, $d) = @$p;
         warn sprintf 'peer sent i:%d o:%d l:%d', $i, $o, length $d;
         my $req = $s->_find_request($i, $o, length $d);
-        $req //
-        return $s->disconnect('Peer sent us a block we were not asking for')
-            ;
+        $req // return $s->disconnect(
+                               'Peer sent us a block we were not asking for');
         $req->_write($d);
         $s->_delete_request($req);
         return if $req->piece->_first_incompete_block;
-        my $piece =
-            $s->torrent->piece_selector->_get_working_piece($req->index);
+        my $piece
+            = $s->torrent->piece_selector->_get_working_piece($req->index);
         $_->has_peer && $_->peer->_delete_request($_)
             for $piece->_complete_blocks;
 
@@ -288,7 +287,8 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
         require Scalar::Util;
         Scalar::Util::weaken $s;
         AE::timer(
-            10 * 60, 0,
+            10 * 60,
+            0,
             sub {
                 $s // return;
                 $s->disconnect('Peer disconnected due to inactivity');
@@ -324,8 +324,8 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
                         $s->has_peer_id ? $s->peer_id : '[Unknown peer]'
                        }
         );
-        my $code =
-            $s->can('_handle_packet_' . $_packet_dispatch{$p->{'type'}});
+        my $code
+            = $s->can('_handle_packet_' . $_packet_dispatch{$p->{'type'}});
         return $code->($s, $p->{'payload'}) if $code;
         return if !eval 'require Data::Dump;';
         Data::Dump::ddx($p);
@@ -355,7 +355,6 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
     sub _send_request {
         my ($s, $b) = @_;
         return if $s->remote_choked;
-
         warn sprintf 'Sending request for i:%d o:%d l:%d to %s', $b->index,
             $b->offset, $b->length, $s->peer_id;
         return $s->push_write(
@@ -365,7 +364,6 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
     sub _send_cancel {
         my ($s, $b) = @_;
         return if $s->remote_choked;
-
         warn sprintf 'Sending cancel for i:%d o:%d l:%d to %s', $b->index,
             $b->offset, $b->length, $s->peer_id;
         return $s->push_write(
@@ -375,8 +373,8 @@ package Net::BitTorrent::Protocol::BEP03::Peer;
     sub _send_piece {
         my ($s, $i, $o, $l) = @_;
         return if $s->choked;
-
-        warn sprintf 'Sending block i:%d o:%d l:%d to %s', $i, $o, $l, $s->peer_id;
+        warn sprintf 'Sending block i:%d o:%d l:%d to %s', $i, $o, $l,
+            $s->peer_id;
         return $s->push_write(
                       build_piece($i, $o, $l, $s->torrent->read($i, $o, $l)));
     }

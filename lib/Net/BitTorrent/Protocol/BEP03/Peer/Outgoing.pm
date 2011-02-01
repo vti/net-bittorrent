@@ -122,6 +122,7 @@
         return $s->disconnect(
                  'Bad info_hash (Does not match the torrent we were seeking)')
             if $info_hash->Compare($s->torrent->info_hash) != 0;
+
         #$s->_check_unique_connection;
         return if !defined $s;
         $s->_send_bitfield;

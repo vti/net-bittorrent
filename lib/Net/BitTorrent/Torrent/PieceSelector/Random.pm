@@ -18,7 +18,7 @@
         my @incomplete = $s->_unassigned_working_pieces;
         return $incomplete[rand @incomplete] if @incomplete;
         return if $s->_count_working_pieces >= $s->max_working_pieces;
-        my @indices=  $peer->_wanted_pieces->Index_List_Read();
+        my @indices = $peer->_wanted_pieces->Index_List_Read();
         return scalar @indices ? $indices[rand @indices] : ();
     }
 
