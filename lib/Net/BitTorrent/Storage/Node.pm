@@ -64,6 +64,8 @@ package Net::BitTorrent::Storage::Node;
         }
     );
 
+    sub open  { shift->_set_open_mode(shift); }
+    sub close { shift->_set_open_mode(undef); }
     sub read ($$$) {
         my ($self, $offset, $length) = @_;
         return if !$self->open_mode;
