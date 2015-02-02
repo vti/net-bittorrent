@@ -76,13 +76,7 @@ package MBX::Net::BitTorrent::Developer;
             $bits[2]
         );
 
-        # start changing the data around
-        $CHANGES_D =~ s[.+(\r?\n)][$dist$1];
-        $CHANGES_D
-            =~ s[(_ -.-. .... .- -. --. . ... _+).*][$1 . sprintf <<'END',
-        $self->{'properties'}{'meta_merge'}{'resources'}{'ChangeLog'}||'', '$',
-        $self->dist_version , qw[$ $ $ $ $ $ $]
-    ]se;
+        my $changes_sprintf = <<'END';
 
 For more information, see the commit log:
     %s
@@ -91,6 +85,14 @@ For more information, see the commit log:
 %sDate%s
 %sUrl%s
 END
+
+        # start changing the data around
+        $CHANGES_D =~ s[.+(\r?\n)][$dist$1];
+        $CHANGES_D
+            =~ s[(_ -.-. .... .- -. --. . ... _+).*][$1 . sprintf $changes_sprintf,
+        $self->{'properties'}{'meta_merge'}{'resources'}{'ChangeLog'}||'', '$',
+        $self->dist_version , qw[$ $ $ $ $ $ $]
+    ]se;
 
      # Keep a backup (just in case) and move the file so we can create it next
         rename('Changes', 'Changes.bak')
